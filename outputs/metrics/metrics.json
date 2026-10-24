@@ -1,0 +1,10 @@
+{
+  "accuracy": 0.8055358410220014,
+  "precision_churn": 0.6572327044025157,
+  "recall_churn": 0.5588235294117647,
+  "f1_churn": 0.6040462427745664,
+  "roc_auc": 0.8418610659019866,
+  "majority_class_baseline_accuracy": 0.7345635202271115,
+  "test_rows": 1409,
+  "train_accuracy": 0.8059992900248492
+}

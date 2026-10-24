@@ -1,0 +1,12 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.vscode/
+.idea/
+
+# Keep the raw dataset out of GitHub
+data/raw/*.csv
+
+# Ignore temporary files
+*.log

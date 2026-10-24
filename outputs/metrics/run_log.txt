@@ -1,0 +1,143 @@
+Python 3.14.2 | pandas 3.1.0 | numpy 2.5.4 | scikit-learn 1.9.1
+Project folder: C:\Users\GREEN GEN TECH\customer-churn-prediction-ml
+class_weight: None
+======================================================================
+STEP 1: DATA INSPECTION (raw data)
+======================================================================
+Rows: 7043   Columns: 21
+
+Column types:
+customerID              str
+gender                  str
+SeniorCitizen         int64
+Partner                 str
+Dependents              str
+tenure                int64
+PhoneService            str
+MultipleLines           str
+InternetService         str
+OnlineSecurity          str
+OnlineBackup            str
+DeviceProtection        str
+TechSupport             str
+StreamingTV             str
+StreamingMovies         str
+Contract                str
+PaperlessBilling        str
+PaymentMethod           str
+MonthlyCharges      float64
+TotalCharges            str
+Churn                   str
+
+Missing values per column (real NaN only):
+  none
+
+Blank text entries (look like data, but are really missing):
+  TotalCharges: 11
+
+Duplicate rows (all columns): 0
+Duplicate customerID values:     0
+
+Target counts:
+Churn
+No     5174
+Yes    1869
+
+Target percentages:
+Churn
+No     73.46
+Yes    26.54
+
+======================================================================
+STEP 2: DATA CLEANING
+======================================================================
+TotalCharges converted to numbers. Blank or non-numeric entries now missing: 11
+  tenure of those rows: [0] (they are filled later by the pipeline imputer, using training data only)
+Duplicate rows removed: 0
+Rows removed for repeated customerID: 0
+Rows removed for missing Churn: 0
+
+Missing values left after cleaning (handled inside the pipeline):
+TotalCharges    11
+
+Clean data shape: (7043, 20)
+
+======================================================================
+STEP 3: EDA GRAPHS
+======================================================================
+  saved outputs\figures\01_churn_distribution.png
+  saved outputs\figures\02_churn_by_contract.png
+  saved outputs\figures\03_churn_by_internet_service.png
+  saved outputs\figures\04_churn_by_payment_method.png
+  saved outputs\figures\05_tenure_distribution.png
+  saved outputs\figures\06_monthly_charges_boxplot.png
+  saved outputs\figures\07_correlation_heatmap.png
+
+======================================================================
+STEP 4: TRAIN / TEST SPLIT (80/20, stratified, random_state=42)
+======================================================================
+Training rows: 5634   Test rows: 1409
+Churn rate in full data: 26.54%  | train: 26.54%  | test: 26.54%
+
+======================================================================
+STEP 5: TRAIN THE PIPELINE (fit on the training set only)
+======================================================================
+Pipeline trained. Input columns: 19 -> model features after encoding: 45
+Training accuracy (for overfitting check): 0.8060
+
+======================================================================
+STEP 6: EVALUATION ON THE TEST SET
+======================================================================
+accuracy                          : 0.8055
+precision_churn                   : 0.6572
+recall_churn                      : 0.5588
+f1_churn                          : 0.6040
+roc_auc                           : 0.8419
+majority_class_baseline_accuracy  : 0.7346
+test_rows                         : 1409
+
+Confusion matrix (rows = actual, columns = predicted):
+            Pred No  Pred Yes
+Actual No       926       109
+Actual Yes      165       209
+
+True Negatives=926  False Positives=109  False Negatives=165  True Positives=209
+
+Classification report:
+              precision    recall  f1-score   support
+
+    No churn       0.85      0.89      0.87      1035
+       Churn       0.66      0.56      0.60       374
+
+    accuracy                           0.81      1409
+   macro avg       0.75      0.73      0.74      1409
+weighted avg       0.80      0.81      0.80      1409
+
+  saved outputs\figures\08_confusion_matrix.png
+  saved outputs\figures\09_roc_curve.png
+  saved outputs\figures\10_top_feature_coefficients.png
+
+Top 5 features that INCREASE churn risk:
+                    feature  coefficient
+InternetService_Fiber optic        0.640
+    Contract_Month-to-month        0.579
+               TotalCharges        0.517
+        StreamingMovies_Yes        0.204
+            StreamingTV_Yes        0.204
+
+Top 5 features that DECREASE churn risk:
+            feature  coefficient
+             tenure       -1.241
+  Contract_Two year       -0.772
+InternetService_DSL       -0.652
+     MonthlyCharges       -0.596
+PaperlessBilling_No       -0.343
+
+======================================================================
+STEP 7: SAVING FILES
+======================================================================
+  saved models\churn_pipeline.joblib
+  saved models\model_info.json
+  saved outputs\metrics\metrics.json
+
+Done in 10.5 seconds.
